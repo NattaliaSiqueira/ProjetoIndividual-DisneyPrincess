@@ -30,11 +30,12 @@ body {
   height: var(--tamanho-header);
   border-bottom: 2px solid black;
 }
-
+ 
 .header .container {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  
 }
 
 .header a {
@@ -60,7 +61,7 @@ body {
 .titulo {
   font-family: 'Disney', cursive;
   font-size: 50px;
-  color: black;
+  color: black
 }
 
 .header h1 {
@@ -93,7 +94,7 @@ body {
   z-index: -1;
   /* coloca o vídeo atrás do texto */
   filter: brightness(0.6);
-  /* escurece um pouco para o texto ficar legível */
+ 
 
 }
 
@@ -193,6 +194,62 @@ body {
   font-size: 25px;
 }
 
+/*curiosidades princesas*/
+
+.curiosidades {
+  background-color: rgb(56, 0, 130);
+  padding: 40px 40px;
+}
+
+.titulo-curiosidades {
+  text-align: center;
+  font-size: 60px;
+  color: #e5e5e5;
+  font-family:'Times New Roman', Times, serif;
+}
+
+.titulo-curiosidades span{
+  font-family: 'Disney';
+}
+
+.descricao{
+  text-align: center;
+  font-size: 30px;
+  color: #e5e5e5;
+  font-family:'Times New Roman', Times, serif;
+}
+
+.lista-curiosidades {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+  gap: 20px; /* espaço entre os cards */
+  margin-top: 30px;
+}
+
+.card-curiosidade {
+  background: rgb(138, 69, 187);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  
+}
+
+.card-curiosidade h3 {
+  margin-bottom: 10px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size:30px ;
+  color: #eed600; 
+}
+
+.card-curiosidade p {
+  font-family: 'Times New Roman', Times, serif;
+  font-size:26px ;
+  color: white; 
+}
+
+
+
+
 
 
 
@@ -209,6 +266,7 @@ body {
   justify-content: center;
   align-items: center; 
   flex-direction: column;
+
 
 }
 
@@ -239,8 +297,9 @@ body {
 
 .login {
   height: var(--tamanho-login);
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
+  /*background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');*/
   background-size: cover;
+  background: linear-gradient(135deg, #0c6b81, #4601be);
 }
 
 .login .container {
@@ -249,6 +308,16 @@ body {
   height: 100%;
 }
 
+.card-login{
+background-color: #cd32bb;
+width: 250px;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: 0.3s;
+  text-align: center;
+
+}
 .card {
   width: 50%;
   background-color: #e5e5e5;
@@ -256,7 +325,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: palevioletred;
+  color: white;
   flex-direction: column;
   height: fit-content;
   padding: 20px 0;
