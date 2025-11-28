@@ -1,4 +1,4 @@
-var express = require("express");
+/*var express = require("express");
 var router = express.Router();
 
 var medidaController = require("../controllers/medidaController");
@@ -12,3 +12,5 @@ router.get("/tempo-real/:idAquario", function (req, res) {
 })
 
 module.exports = router;
+
+*/

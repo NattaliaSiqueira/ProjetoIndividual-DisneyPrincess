@@ -1,4 +1,4 @@
-var express = require("express");
+/*var express = require("express");
 var router = express.Router();
 
 var aquarioController = require("../controllers/aquarioController");
@@ -12,3 +12,4 @@ router.post("/cadastrar", function (req, res) {
 })
 
 module.exports = router;
+*/
