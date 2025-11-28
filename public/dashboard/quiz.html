@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="tituloQuiz"></h1>
+    <div alternativas id="div_alternativas" style="display: none;">
+    <input type="radio" id="input_A" value="alternativaA" name="alternativa"> <label id="respostaA"></label>
+    <input type="radio" id="input_B" value="alternativaB" name="alternativa"> <label id="respostaB"></label>
+    <input type="radio" id="input_C" value="alternativaC" name="alternativa"> <label id="respostaC"></label>
+    <input type="radio" id="input_D" value="alternativaD" name="alternativa"> <label id="respostaD"></label>
+    </div>
+    
+
+    <button onclick="proxima()" id="botaoQuiz">Começar Quiz</button>
+</body>
+
+</html>
+<script>
+    var contadorQuiz = 0;
+    var listaPerguntas = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    var listaRespostas = [['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'], ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'], ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'], ['D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D']];
+    var iniciarQuiz = true;
+
+
+    function proxima() {
+        botaoQuiz.innerHTML = "Proxima";
+        div_alternativas.style.display = "flex";
+
+        var alternativaA = input_A.checked;
+        var alternativaB = input_B.checked;
+        var alternativaC = input_C.checked;
+        var alternativaD = input_D.checked;
+
+        if (contadorQuiz < 8) {
+
+            if (alternativaA || alternativaB || alternativaC || alternativaD || iniciarQuiz) {
+
+                var enunciadoA = document.getElementById("respostaA");
+                var enunciadoB = document.getElementById("respostaB");
+                var enunciadoC = document.getElementById("respostaC");
+                var enunciadoD = document.getElementById("respostaD");
+
+
+                var respostaA = listaRespostas[0][contadorQuiz];
+                var respostaB = listaRespostas[1][contadorQuiz];
+                var respostaC = listaRespostas[2][contadorQuiz];
+                var respostaD = listaRespostas[3][contadorQuiz];
+
+
+                tituloQuiz.innerHTML = listaPerguntas[contadorQuiz];
+
+                enunciadoA.innerHTML = respostaA;
+                enunciadoB.innerHTML = respostaB;
+                enunciadoC.innerHTML = respostaC;
+                enunciadoD.innerHTML = respostaD;
+
+                contadorQuiz++;
+            } else {
+                alert("Selecione uma alternativa")
+            }
+        } else {
+            window.location = "index.html";
+
+        }
+        iniciarQuiz = false;
+    }
+
+</script>
