@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1 id="tituloQuiz"></h1>
+    <h1 id="tituloQuiz">Descubra Qual Princesa Você É</h1>
     <div alternativas id="div_alternativas" style="display: none;">
     <input type="radio" id="input_A" value="alternativaA" name="alternativa"> <label id="respostaA"></label>
     <input type="radio" id="input_B" value="alternativaB" name="alternativa"> <label id="respostaB"></label>
@@ -17,16 +17,21 @@
     </div>
     
 
+    <br>
     <button onclick="proxima()" id="botaoQuiz">Começar Quiz</button>
 </body>
 
 </html>
 <script>
     var contadorQuiz = 0;
-    var listaPerguntas = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    var listaRespostas = [['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'], ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'], ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'], ['D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D']];
+    var listaPerguntas = ["1.Como você costuma agir diante de um desafio?", "2.O que você mais valoriza na vida?", "3.Como você reage quando alguém diz que você não é capaz?", "4.Qual dessas qualidades combina mais com você?", "5.Em um dia livre, o que você prefere fazer?", "6.Qual dessas frases te representa mais?", "7.Qual dessas frases te representa mais?", "8.Como descreveria seu jeito de se expressar?", "9.Qual ambiente mais combina com você?"];
+    var listaRespostas = [['Sigo em frente com coragem.', 'Família', 'Provo que estão errados.', 'Determinação', 'Ler um livro ou aprender algo novo', '“Eu vou além do que esperam de mim.”', 'Faz qualquer coisa para proteger', 'Sincera e emocional', 'Floresta ou natureza'], ['Penso bastante antes de agir.', 'Liberdade', 'Ignoro e sigo meu próprio caminho.', 'Curiosidade', 'Explorar lugares novos', '“O mundo é muito grande para ficar parada.”', 'Usa inteligência e estratégia', 'Calma e compassiva', 'Castelo ou biblioteca'], ['Sigo meu coração.', 'Conhecimento', 'Fico chateada, mas continuo tentando.', 'Gentileza', 'Passar tempo com quem ama', '“A bondade sempre encontra um caminho.”', 'Coloca o coração à frente', 'Forte e objetiva', 'Praia e mar'], ['Procuro ajuda e trabalho em equipe.', 'Aventuras', 'Isso me motiva a trabalhar ainda mais.', 'Independência', 'Treinar, cozinhar ou trabalhar em um projeto', '“Eu faço meu próprio destino.”', 'Age sem pensar duas vezes', 'Criativa e curiosa', 'Cidade movimentada']];
     var iniciarQuiz = true;
 
+    var moanaMulan = 0; // Você é corajosa, determinada e não tem medo de enfrentar desafios enormes.Sempre luta pelo que acredita e protege quem ama.
+    var belaRapunzel = 0; //Você é curiosa, inteligente e vive em busca de conhecimento e novidades.Enxerga beleza onde ninguém mais vê.
+    var cinderelaBrancaDeNeve = 0; //Gentil, doce e empática.Mesmo em dificuldades, mantém a bondade e acredita nas pessoas.
+    var meridaTiana = 0; //Independente, forte e trabalhadora.Você faz seu próprio destino e não espera nada cair do céu.
 
     function proxima() {
         botaoQuiz.innerHTML = "Proxima";
