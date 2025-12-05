@@ -1,136 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Disney</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Disney</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
 
-    <link rel="stylesheet" href="../css/dashboards.css">
+#caixaQuizBox {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgb(0, 21, 128);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+
+#tituloPrincipalBoxes {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+}
+
+
+#quizButton {
+    background-color: #9c038f;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+#quizButton:hover {
+    background-color: #9c038f;
+}
+
+#sairPagina {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #d9534f;
+    color: white;
+    text-decoration: none; 
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+#sairPagina:hover {
+    background-color: #c9302c;
+}
+
+
+#perguntaAtualQuiz {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 20px 0;
+    color: white;
+}
+
+
+#alternativasTextoId {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 10px;
+    color: white;
+}
+
+#alternativasTextoId input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+#alternativasTextoId label {
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#boxQuizMaioral {
+    max-width: 650px;
+    margin: 40px auto;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+#dashPrincipal {
+    margin-bottom: 20px;
+}
+
+
+#kpiParecido, #kpiTotal {
+    font-size: 18px;
+    color: #333;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+body {
+    background-color: #f0e4f7;
+    margin: 0;
+    padding: 0;
+}
+</style>
 </head>
-
 <body>
-    <h1 id="tituloQuiz">Descubra Qual Princesa é mais parecida com você</h1>
-    <div alternativas id="div_alternativas" style="display: none;">
-        <input type="radio" id="input_A" value="alternativaA" name="alternativa"> <label id="respostaA"></label>
-        <input type="radio" id="input_B" value="alternativaB" name="alternativa"> <label id="respostaB"></label>
-        <input type="radio" id="input_C" value="alternativaC" name="alternativa"> <label id="respostaC"></label>
-        <input type="radio" id="input_D" value="alternativaD" name="alternativa"> <label id="respostaD"></label>
+
+
+<a href="../login.html" id="sairPagina">Sair</a>
+
+<div id="boxQuizMaioral" style="display:flex; justify-content:center; align-items:center; flex-direction:column; margin-top:30px;">
+    <canvas id="dashPrincipal" style="max-width:600px; display:none;"></canvas>
+    <div id="kpiParecido"></div>
+    <div id="kpiTotal"></div>
+</div>
+
+<div id="caixaQuizBox">
+    <h1 id="tituloPrincipalBoxes">Descubra qual princesa da Disney combina com você!</h1>
+
+    <div id="questoesId">
+        <h2 id="perguntaAtualQuiz"></h2>
+        <div id="alternativasTextoId">
+            <input type="radio" name="alternativa" id="ASelect"><label id="alterA"></label>
+            <input type="radio" name="alternativa" id="BSelect"><label id="alterB"></label>
+            <input type="radio" name="alternativa" id="CSelect"><label id="alterC"></label>
+            <input type="radio" name="alternativa" id="DSelect"><label id="alterD"></label>
+            <input type="radio" name="alternativa" id="ESelect"><label id="alterE"></label>
+        </div>
     </div>
 
+    <button id="quizButton" onclick="quiz()">Responder</button>
+</div>
 
-    <br>
-    <button onclick="proxima()" id="botaoQuiz">Começar Quiz</button>
+<script>
+var moanaMulan = 0;
+var belaRapunzel = 0;
+var cinderelaBrancaDeNeve = 0;
+var meridaTiana = 0;
+var arielJasmine = 0;
 
+var checarComeco = false;
+var perguntaAtual = 0;
+
+
+var Quiz = [
+    ["Como você reage diante de desafios?", "O que você mais valoriza na vida?", "Como lida com críticas?", "Qual característica mais te define?", "O que gosta de fazer no tempo livre?", "Qual frase te representa?", "Como reage quando alguém precisa de ajuda?", "Como se expressa?", "Qual ambiente te atrai mais?"],
+    ["Sigo em frente com coragem.", "Família", "Provo que estão errados.", "Determinação", "Ler ou aprender algo novo", "Vou além do esperado", "Protejo quem amo", "Sincera e emocional", "Floresta/natureza"],
+    ["Penso bastante antes de agir.", "Liberdade", "Ignoro e sigo meu caminho.", "Curiosidade", "Explorar lugares novos", "O mundo é grande para ficar parado", "Uso inteligência e estratégia", "Calma e compassiva", "Castelo/biblioteca"],
+    ["Sigo meu coração.", "Conhecimento", "Fico chateada mas continuo.", "Gentileza", "Passar tempo com quem amo", "A bondade encontra caminho", "Coloco o coração à frente", "Forte e objetiva", "Praia/mar"],
+    ["Procuro ajuda e trabalho em equipe.", "Aventuras", "Isso me motiva a trabalhar mais", "Independência", "Treinar ou cozinhar", "Faço meu próprio destino", "Age sem pensar duas vezes", "Criativa e curiosa", "Cidade movimentada"],
+    ["Adoro me divertir e explorar.", "Amizade", "Ignoro comentários negativos", "Alegria", "Cantar ou dançar", "A vida é para ser aproveitada", "Apoio amigos", "Expressiva e alegre", "Praia/praça"]
+];
+
+function quiz() {
+    var questoes = document.getElementById("questoesId");
+    var botao = document.getElementById("quizButton");
+    var alterTexto = document.getElementById("alternativasTextoId");
+    var caixaQuizBox = document.getElementById("caixaQuizBox");
+
+    var pergunta = document.getElementById("perguntaAtualQuiz");
+    var Aq = document.getElementById("alterA");
+    var Bq = document.getElementById("alterB");
+    var Cq = document.getElementById("alterC");
+    var Dq = document.getElementById("alterD");
+    var Eq = document.getElementById("alterE");
+
+    var altA = document.getElementById("ASelect");
+    var altB = document.getElementById("BSelect");
+    var altC = document.getElementById("CSelect");
+    var altD = document.getElementById("DSelect");
+    var altE = document.getElementById("ESelect");
+
+    alterTexto.style.display = "flex";
+    questoes.style.display = "block";
+    caixaQuizBox.style.border = "2px solid white";
+
+    botao.innerHTML = "Responder";
+
+    var validade = true;
+
+    if (checarComeco == true) {
+        if (altA.checked) moanaMulan += 2;
+        else if (altB.checked) belaRapunzel += 2;
+        else if (altC.checked) cinderelaBrancaDeNeve += 2;
+        else if (altD.checked) meridaTiana += 2;
+        else if (altE.checked) arielJasmine += 2;
+        else {
+            validade = false;
+            alert("Selecione uma opção!");
+        }
+    }
+
+    altA.checked = false; altB.checked = false; altC.checked = false; altD.checked = false; altE.checked = false;
+
+    if (validade) {
+        pergunta.innerHTML = Quiz[0][perguntaAtual];
+        Aq.innerHTML = Quiz[1][perguntaAtual];
+        Bq.innerHTML = Quiz[2][perguntaAtual];
+        Cq.innerHTML = Quiz[3][perguntaAtual];
+        Dq.innerHTML = Quiz[4][perguntaAtual];
+        Eq.innerHTML = Quiz[5][perguntaAtual];
+
+        perguntaAtual++;
+    }
+
+    if (perguntaAtual >= Quiz[0].length) {
+        alterTexto.style.display = "none";
+        questoes.style.display = "none";
+        caixaQuizBox.style.border = "none";
+
+        botao.onclick = null;
+        botao.innerHTML = "Finalizar Quiz";
+        botao.onclick = Resultado;
+    }
+
+    checarComeco = true;
+}
+
+function Resultado() {
+    var pontuacoes = [moanaMulan, belaRapunzel, cinderelaBrancaDeNeve, meridaTiana, arielJasmine];
+    var princesas = ["Moana/Mulan", "Bela/Rapunzel", "Cinderela/Branca de Neve", "Merida/Tiana", "Ariel/Jasmine"];
+    var maiorPontuacao = Math.max(...pontuacoes);
+    var princesa = princesas[pontuacoes.indexOf(maiorPontuacao)];
+
+    alert("Sua princesa é: " + princesa);
+
+    document.getElementById("caixaQuizBox").style.display = "none";
+
+    exibirGraficos(princesa, pontuacoes);
+}
+
+function exibirGraficos(princesaMaisParecida, pontuacoes) {
+    var graficoFinal = document.getElementById("dashPrincipal");
+    graficoFinal.style.display = "block";
+
+    var total = Quiz[0].length * 2;
+    var porcentagens = pontuacoes.map(p => ((p/total)*100).toFixed());
+
+    new Chart(graficoFinal, {
+        type: 'pie',
+        data: {
+            labels: ['Moana/Mulan', 'Bela/Rapunzel', 'Cinderela/Branca de Neve', 'Merida/Tiana', 'Ariel/Jasmine'],
+            datasets: [{
+                data: porcentagens,
+                backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#8A2BE2','#FF7F50'],
+                borderColor: '#fff',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive:true,
+            plugins: {
+                legend: { position: 'bottom', labels: { font: { size:14, weight:'bold' } } },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.raw + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    document.getElementById("kpiParecido").innerHTML = "Princesa mais parecida: <b>" + princesaMaisParecida + "</b>";
+    document.getElementById("kpiTotal").innerHTML = "Pontuação total: <b>" + Math.max(...pontuacoes) + "</b>";
+}
+
+// Inicia o quiz automaticamente ao carregar a página
+window.onload = quiz;
+</script>
 
 </body>
-
 </html>
-<script>
-    var contadorQuiz = 0;
-    var listaPerguntas = ["1.Como você costuma agir diante de um desafio?", "2.O que você mais valoriza na vida?", "3.Como você reage quando alguém diz que você não é capaz?", "4.Qual dessas qualidades combina mais com você?", "5.Em um dia livre, o que você prefere fazer?", "6.Qual dessas frases te representa mais?", "7.Qual dessas frases te representa mais?", "8.Como descreveria seu jeito de se expressar?", "9.Qual ambiente mais combina com você?"];
-    var listaRespostas = [['Sigo em frente com coragem.', 'Família', 'Provo que estão errados.', 'Determinação', 'Ler um livro ou aprender algo novo', '“Eu vou além do que esperam de mim.”', 'Faz qualquer coisa para proteger', 'Sincera e emocional', 'Floresta ou natureza'], ['Penso bastante antes de agir.', 'Liberdade', 'Ignoro e sigo meu próprio caminho.', 'Curiosidade', 'Explorar lugares novos', '“O mundo é muito grande para ficar parada.”', 'Usa inteligência e estratégia', 'Calma e compassiva', 'Castelo ou biblioteca'], ['Sigo meu coração.', 'Conhecimento', 'Fico chateada, mas continuo tentando.', 'Gentileza', 'Passar tempo com quem ama', '“A bondade sempre encontra um caminho.”', 'Coloca o coração à frente', 'Forte e objetiva', 'Praia e mar'], ['Procuro ajuda e trabalho em equipe.', 'Aventuras', 'Isso me motiva a trabalhar ainda mais.', 'Independência', 'Treinar, cozinhar ou trabalhar em um projeto', '“Eu faço meu próprio destino.”', 'Age sem pensar duas vezes', 'Criativa e curiosa', 'Cidade movimentada']];
-    var iniciarQuiz = true;
-
-    var moanaMulan = 0; // Você é corajosa, determinada e não tem medo de enfrentar desafios enormes.Sempre luta pelo que acredita e protege quem ama.
-    var belaRapunzel = 0; //Você é curiosa, inteligente e vive em busca de conhecimento e novidades.Enxerga beleza onde ninguém mais vê.
-    var cinderelaBrancaDeNeve = 0; //Gentil, doce e empática.Mesmo em dificuldades, mantém a bondade e acredita nas pessoas.
-    var meridaTiana = 0; //Independente, forte e trabalhadora.Você faz seu próprio destino e não espera nada cair do céu.
-
-    function proxima() {
-        botaoQuiz.innerHTML = "Proxima";
-        div_alternativas.style.display = "flex";
-
-
-        var alternativaA = input_A.checked;
-        var alternativaB = input_B.checked;
-        var alternativaC = input_C.checked;
-        var alternativaD = input_D.checked;
-
-
-        if (contadorQuiz < 9) {
-
-            if (alternativaA || alternativaB || alternativaC || alternativaD || iniciarQuiz) {
-
-                var enunciadoA = document.getElementById("respostaA");
-                var enunciadoB = document.getElementById("respostaB");
-                var enunciadoC = document.getElementById("respostaC");
-                var enunciadoD = document.getElementById("respostaD");
-
-
-                var respostaA = listaRespostas[0][contadorQuiz];
-                var respostaB = listaRespostas[1][contadorQuiz];
-                var respostaC = listaRespostas[2][contadorQuiz];
-                var respostaD = listaRespostas[3][contadorQuiz];
-
-
-                tituloQuiz.innerHTML = listaPerguntas[contadorQuiz];
-
-                enunciadoA.innerHTML = respostaA;
-                enunciadoB.innerHTML = respostaB;
-                enunciadoC.innerHTML = respostaC;
-                enunciadoD.innerHTML = respostaD;
-
-                contadorQuiz++;
-            } else {
-                alert("Selecione uma alternativa")
-            }
-        } else {
-
-            div_alternativas.style.display = "none";
-            botaoQuiz.innerHTML = "Finalizar Quiz";
-            botaoQuiz.onclick = finalizar;
-
-
-
-
-
-        }
-        iniciarQuiz = false;
-
-
-        if (alternativaA) {
-            moanaMulan += 3;
-        } else if (alternativaB) {
-            belaRapunzel += 3;
-        } else if (alternativaC) {
-            cinderelaBrancaDeNeve += 3;
-        } else {
-            meridaTiana += 3;
-        }
-
-
-
-
-    }
-
-    function finalizar() {
-        var princesa = "";
-        var maior = Math.max(moanaMulan, belaRapunzel, cinderelaBrancaDeNeve, meridaTiana);
-
-        if (maior == moanaMulan) princesa = "Moana/Mulan";
-        if (maior == belaRapunzel) princesa = "Bela/Rapunzel";
-        if (maior == cinderelaBrancaDeNeve) princesa = "Cinderela/Branca de Neve";
-        if (maior == meridaTiana) princesa = "Merida/Tiana";
-
-        fetch("/quiz/salvar", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                idUsuario: sessionStorage.ID_USUARIO,
-                princesa: princesa,
-                moanaMulan: moanaMulan,
-                belaRapunzel: belaRapunzel,
-                cinderelaBrancaNeve: cinderelaBrancaDeNeve,
-                meridaTiana: meridaTiana
-            })
-        })
-            .then(r => {
-                if (r.ok) {
-                    alert("Resultado salvo com sucesso!");
-                    window.location.href = "dashboard.html";
-                }
-            });
-    }
-
-</script>
