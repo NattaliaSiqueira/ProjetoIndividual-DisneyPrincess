@@ -4,21 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Quiz Disney</title>
+
+    <link rel="stylesheet" href="../css/dashboards.css">
 </head>
 
 <body>
-    <h1 id="tituloQuiz">Descubra Qual Princesa Você É</h1>
+    <h1 id="tituloQuiz">Descubra Qual Princesa é mais parecida com você</h1>
     <div alternativas id="div_alternativas" style="display: none;">
-    <input type="radio" id="input_A" value="alternativaA" name="alternativa"> <label id="respostaA"></label>
-    <input type="radio" id="input_B" value="alternativaB" name="alternativa"> <label id="respostaB"></label>
-    <input type="radio" id="input_C" value="alternativaC" name="alternativa"> <label id="respostaC"></label>
-    <input type="radio" id="input_D" value="alternativaD" name="alternativa"> <label id="respostaD"></label>
+        <input type="radio" id="input_A" value="alternativaA" name="alternativa"> <label id="respostaA"></label>
+        <input type="radio" id="input_B" value="alternativaB" name="alternativa"> <label id="respostaB"></label>
+        <input type="radio" id="input_C" value="alternativaC" name="alternativa"> <label id="respostaC"></label>
+        <input type="radio" id="input_D" value="alternativaD" name="alternativa"> <label id="respostaD"></label>
     </div>
-    
+
 
     <br>
     <button onclick="proxima()" id="botaoQuiz">Começar Quiz</button>
+
+
 </body>
 
 </html>
@@ -37,12 +41,14 @@
         botaoQuiz.innerHTML = "Proxima";
         div_alternativas.style.display = "flex";
 
+
         var alternativaA = input_A.checked;
         var alternativaB = input_B.checked;
         var alternativaC = input_C.checked;
         var alternativaD = input_D.checked;
 
-        if (contadorQuiz < 8) {
+
+        if (contadorQuiz < 9) {
 
             if (alternativaA || alternativaB || alternativaC || alternativaD || iniciarQuiz) {
 
@@ -70,10 +76,61 @@
                 alert("Selecione uma alternativa")
             }
         } else {
-            window.location = "index.html";
+
+            div_alternativas.style.display = "none";
+            botaoQuiz.innerHTML = "Finalizar Quiz";
+            botaoQuiz.onclick = finalizar;
+
+
+
+
 
         }
         iniciarQuiz = false;
+
+
+        if (alternativaA) {
+            moanaMulan += 3;
+        } else if (alternativaB) {
+            belaRapunzel += 3;
+        } else if (alternativaC) {
+            cinderelaBrancaDeNeve += 3;
+        } else {
+            meridaTiana += 3;
+        }
+
+
+
+
+    }
+
+    function finalizar() {
+        var princesa = "";
+        var maior = Math.max(moanaMulan, belaRapunzel, cinderelaBrancaDeNeve, meridaTiana);
+
+        if (maior == moanaMulan) princesa = "Moana/Mulan";
+        if (maior == belaRapunzel) princesa = "Bela/Rapunzel";
+        if (maior == cinderelaBrancaDeNeve) princesa = "Cinderela/Branca de Neve";
+        if (maior == meridaTiana) princesa = "Merida/Tiana";
+
+        fetch("/quiz/salvar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                idUsuario: sessionStorage.ID_USUARIO,
+                princesa: princesa,
+                moanaMulan: moanaMulan,
+                belaRapunzel: belaRapunzel,
+                cinderelaBrancaNeve: cinderelaBrancaDeNeve,
+                meridaTiana: meridaTiana
+            })
+        })
+            .then(r => {
+                if (r.ok) {
+                    alert("Resultado salvo com sucesso!");
+                    window.location.href = "dashboard.html";
+                }
+            });
     }
 
 </script>

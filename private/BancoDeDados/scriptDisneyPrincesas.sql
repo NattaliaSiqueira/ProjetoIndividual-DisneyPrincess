@@ -1,16 +1,14 @@
 CREATE DATABASE disney;
 USE disney;
 
-CREATE TABLE Usuario (
-    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-    Nome VARCHAR(45),
-    Sobrenome VARCHAR(45),
+CREATE TABLE usuario (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
     email VARCHAR(45),
-    telefone VARCHAR(45),
-    CPF VARCHAR(45)
+    senha VARCHAR(20)
 );
 
-CREATE TABLE Princesa (
+CREATE TABLE princesa (
     idPrincesa INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
     personalidade VARCHAR(45),
@@ -19,7 +17,7 @@ CREATE TABLE Princesa (
     dilema VARCHAR(45)
 );
 
-CREATE TABLE Filmes (
+CREATE TABLE filmes (
     idFilmes INT PRIMARY KEY AUTO_INCREMENT,
     tipo VARCHAR(45),
     sinopse VARCHAR(45),
@@ -28,24 +26,35 @@ CREATE TABLE Filmes (
     FOREIGN KEY (fkPrincesa) REFERENCES Princesa(idPrincesa)
 );
 
-CREATE TABLE Quiz_Perguntas (
+CREATE TABLE quiz_perguntas (
     idPergunta INT PRIMARY KEY AUTO_INCREMENT,
-    enunciado VARCHAR(245)
+    alternativaA INT,
+    alternativaB INT,
+    alternativaC INT,
+    alternativaD INT
 );
 
-CREATE TABLE Respostas (
-    idRespostas INT PRIMARY KEY AUTO_INCREMENT,
-    Alternativa VARCHAR(45),
-    fkPrincesa INT,
-    fkQuiz INT,
-    FOREIGN KEY (fkPrincesa) REFERENCES Princesa(idPrincesa),
-    FOREIGN KEY (fkQuiz) REFERENCES Quiz_Perguntas(idPergunta)
+
+CREATE TABLE resultado (
+    idResultado INT PRIMARY KEY AUTO_INCREMENT,
+    fkQuiz_perguntas INT,
+    CONSTRAINT fkResultadoQuiz
+    FOREIGN KEY (fkQuiz_perguntas) REFERENCES quiz_perguntas(idPergunta)
+    
 );
 
-CREATE TABLE Resultado (
-    Usuario_idUsuario INT,
-    fkRespostas INT,
-    PRIMARY KEY (Usuario_idUsuario, fkRespostas),
-    FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario(idUsuario),
-    FOREIGN KEY (fkRespostas) REFERENCES Respostas(idRespostas)
+/*CREATE TABLE Resultado_Quiz (
+    idResultado INT PRIMARY KEY AUTO_INCREMENT,
+    idUsuario INT,
+    princesa_final VARCHAR(45),
+
+    pontosMoanaMulan INT,
+    pontosBelaRapunzel INT,
+    pontosCinderelaBrancaNeve INT,
+    pontosMeridaTiana INT,
+    
+    dataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
+*/

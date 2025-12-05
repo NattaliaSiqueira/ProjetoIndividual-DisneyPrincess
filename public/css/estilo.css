@@ -21,7 +21,6 @@ body {
 }
 
 .container {
-  display: flex;
   width: 80%;
   margin: auto;
 }
@@ -32,6 +31,7 @@ body {
 }
  
 .header .container {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   height: 100%;
@@ -98,11 +98,12 @@ body {
 
 }
 
-.banner .container {
+.banner .container { 
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  display: flex;
+
   flex-direction: column;
 }
 
@@ -173,9 +174,30 @@ body {
   text-align: center;
 }
 
-.card:hover {
-  transform: scale(1.05);
+.card {
+  background-color: #7c009b;
+  width: 240px;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: 0.3s;
+  text-align: center;
+
 }
+.card {
+  width: 50%;
+  background-color: #e5e5e5;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: white;
+  flex-direction: column;
+  height: fit-content;
+  padding: 20px 0;
+}
+
+
 
 .card img {
   width: 100%;
@@ -247,9 +269,112 @@ body {
   color: white; 
 }
 
+/*reinos*/
+.reinos {
+    background: linear-gradient(135deg, #00396b, #02a6d8);
+    padding: 60px 40px;
+    color: white;
+}
+
+.titulo-reinos {
+    text-align: center;
+    font-size: 60px;
+    color: white;
+    font-family: 'Times New Roman', serif;
+}
+
+.titulo-reinos span {
+    font-family: 'Disney';
+}
+
+.descricao-reinos {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 28px;
+    color: #e6e6e6;
+    font-family: 'Times New Roman', serif;
+}
+
+.cards-reinos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.card-reino {
+    background: rgb(0, 120, 160);
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    border: 2px solid transparent;
+}
 
 
+.card-reino h3 {
+    font-size: 32px;
+    margin: 0;
+    font-family: 'Times New Roman', serif;
+}
 
+.card-reino p {
+    margin-top: 10px;
+    font-size: 22px;
+    color: rgb(177, 238, 175);
+    font-family: 'Times New Roman', serif;
+}
+
+.img-reino {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+
+/*sobre mimm*/
+.sobre-mim {
+    background: #842e89;
+    padding: 60px 0;
+}
+
+.container-sobre {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.foto-sobre {
+    width: 320px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.texto-sobre {
+    max-width: 600px;
+    color: white;
+}
+
+.texto-sobre h2 {
+    font-family: "Disney", cursive;
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.texto-sobre p {
+    font-size: 24px;
+    line-height: 1.6;
+    font-family: 'Times New Roman', serif;
+}
 
 
 
@@ -293,212 +418,116 @@ body {
   opacity: 0.8;
 }
 
-/*Cadastro*/
+/*login e cadastro*/
+
+.login,
 .cadastro {
-  min-height: 100vh;               
-  background: linear-gradient(135deg, #00748e, #015fbe);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 60px 20px;
-}
-
-.container-cadastro {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  width: 100%;
-}
-
-.card-cadastro {
-  background-color: #0a4fc6;
-  width: 300px;                     
-  border-radius: 16px;
-  padding: 25px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  text-align: center;
-}
-
-.card-cadastro h2{
-  font-family: 'Times New Roman', Times, serif;
-  color: white;
-  font-size: 40px;
-}
-
-.campo span{
-  font-family: 'Times New Roman', Times, serif;
-  color: white;
-  font-size: 30px;
-}
-
-/* LOGIN */
-
-.login {
   min-height: 100vh;
-  background: linear-gradient(135deg, #49008e, #995af0);
-  background-size: cover;
-}
-
-.login .container-login {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
-  height: 100%;
-  padding: 40px 0;
+  padding: 40px 20px;
+  background:rgb(0, 6, 123); 
 }
 
-.card {
-  background-color: #7c009b;
-  width: 240px;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: 0.3s;
-  text-align: center;
 
-}
-.card {
-  width: 50%;
-  background-color: #e5e5e5;
-  border-radius: 10px;
+.card-form {
+  width: 420px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 35px 40px;
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.35);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  animation: fadeIn .6s ease-in-out;
+}
+
+.card-form h2 {
+  font-size: 40px;
+  font-family: 'Times New Roman', serif;
   color: white;
-  flex-direction: column;
-  height: fit-content;
-  padding: 20px 0;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
-.card h2 {
-  margin: 0;
-  font-size: 30px;
-}
 
+/* FORMULÁRIO */
 .formulario {
+  width: 100%;
   display: flex;
-  height: 90%;
-  width: 80%;
-  justify-content: space-around;
   flex-direction: column;
-  
 }
 
-.formulario span {
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.formulario input {
-  border: 2px solid #32b9cd;
-  text-align: center;
-  border-radius: 10px;
-  margin: 0;
-}
-
-.formulario select {
-  border: 2px solid #32b9cd;
-  background-color: white;
-  color: gray;
-  height: 36px;
-  text-align: center;
-  border-radius: 10px;
-  margin: 0;
-}
 
 .campo {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  padding: 5px 0;
+  margin-bottom: 20px;
 }
 
-.botao {
+.campo span {
+  font-size: 22px;
+  font-family: 'Times New Roman', serif;
+  color: white;
+  margin-bottom: 6px;
+}
+
+
+.formulario input,
+.formulario select {
+  border: none;
+  height: 42px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 17px;
+  background: rgba(255,255,255,0.9);
+}
+
+
+
+.btn, .botao {
   cursor: pointer;
-  font-family: "Barlow", sans-serif;
-  border: 0;
-  border-radius: 5px;
-  font-weight: 600;
+  width: 160px;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  background: #ff2c78;
+  color: white;
   font-size: 18px;
-  color: #fff;
-  background-color: #1484ed;
-  width: 120px;
-  height: 30px;
+  font-weight: 700;
   align-self: center;
   margin-top: 20px;
+  transition: 0.3s;
 }
 
-.loading-div {
-  width: 50px;
-  display: none;
+.btn:hover,
+.botao:hover {
+  background: #ff0059;
 }
 
-.loading-div img {
-  height: 50px;
-  width: 50px;
-}
 
-#div_erros_login {
-  display: none
-}
-
-/* FORMULARIO */
-
-.alerta_erro {
-  display: flex;
-  justify-content: flex-end;
-}
 
 .card_erro {
   display: none;
   background-color: #fff;
   color: black;
-  width: 230px;
+  width: 260px;
   position: fixed;
-  border-radius: 4px;
-  border: #ED145B 3px solid;
-  padding: 10px;
-  margin-right: 10%;
+  border-radius: 8px;
+  border: #ff0061 3px solid;
+  padding: 12px;
+  top: 20px;
+  right: 20px;
 }
 
-.card_erro #mensagem_erro {
-  font-weight: 500;
-  font-size: 20px;
+#div_erros_login {
+  display: none;
 }
 
-.formulario .tipo_campo {
-  font-size: 20px;
-  font-weight: 600 !important;
-}
 
-.formulario {
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  margin-bottom: 10px;
-  border: 2px solid #32b9cd;
-  padding: 10px;
-  text-align: center;
-  border-radius: 10px;
-}
-
-.btn {
-  font-family: "Barlow", sans-serif;
-  border: 0;
-  border-radius: 5px;
-  font-weight: 600;
-  font-size: 18px;
-  padding: 10px 15px;
-  color: white;
-  background-color: #ED145B;
-  width: 120px;
-  align-self: center;
-  margin-top: 5px;
-}
 
 .loading-div {
   width: 50px;
@@ -507,21 +536,41 @@ input {
 }
 
 .loading-div img {
-  height: 50px;
   width: 50px;
+  height: 50px;
 }
 
-/* SIMULADOR */
 
-.simulador {
-  color: white;
+/* Animação */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to   { opacity: 1; transform: translateY(0);}
 }
 
-.simulador .container {
-  flex-direction: column;
-  overflow: scroll;
-  height: var(--tamanho-simulador);
+.side-img {
+    width: 260px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.3));
 }
+
+
+.container-login,
+.container-cadastro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 20px;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .side-img {
+        display: none;
+    }
+}
+
 
 /* ALERTA */
 
@@ -583,3 +632,4 @@ input {
     transform: rotate(25deg)
   }
 }
+
